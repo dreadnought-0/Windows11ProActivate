@@ -82,6 +82,10 @@ Each command performs a distinct function in resetting and reconfiguring the Win
 
 ### 1. **Download the Script**
 
+You can download the raw file by clicking 'activatewin11pro.ps1' above or find the latest release here: [Releases](https://github.com/dreadnought-0/Windows11ProActivate/releases/tag/latest)
+
+If you download the .zip folder, make sure to extract it, and move the 'activatewin11pro.ps1' to your downloads folder.
+
 Save `activatewin11pro.ps1` from this repository to your **Downloads** folder.
 
 ---
