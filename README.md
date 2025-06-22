@@ -10,12 +10,25 @@ This PowerShell script automates the process of removing old license keys, clear
 
 The script runs the following commands in sequence:
 ````markdown
-Start-Process -FilePath "cscript.exe" -ArgumentList "slmgr.vbs /upk" -NoNewWindow -Wait
-Start-Process -FilePath "cscript.exe" -ArgumentList "slmgr.vbs /cpky" -NoNewWindow -Wait
-Start-Process -FilePath "cscript.exe" -ArgumentList "slmgr.vbs /ckms" -NoNewWindow -Wait
-Start-Process -FilePath "cscript.exe" -ArgumentList "slmgr.vbs /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX" -NoNewWindow -Wait
-Start-Process -FilePath "cscript.exe" -ArgumentList "slmgr.vbs /skms kms8.msguides.com" -NoNewWindow -Wait
-Start-Process -FilePath "cscript.exe" -ArgumentList "slmgr.vbs /ato" -NoNewWindow -Wait
+Write-Host "Uninstalling current product key..." -ForegroundColor Cyan
+Start-Process -FilePath "cscript.exe" -ArgumentList "C:\Windows\System32\slmgr.vbs /upk" -NoNewWindow -Wait
+
+Write-Host "Clearing the product key from the registry..." -ForegroundColor Cyan
+Start-Process -FilePath "cscript.exe" -ArgumentList "C:\Windows\System32\slmgr.vbs /cpky" -NoNewWindow -Wait
+
+Write-Host "Clearing any configured KMS server..." -ForegroundColor Cyan
+Start-Process -FilePath "cscript.exe" -ArgumentList "C:\Windows\System32\slmgr.vbs /ckms" -NoNewWindow -Wait
+
+Write-Host "Installing new product key..." -ForegroundColor Cyan
+Start-Process -FilePath "cscript.exe" -ArgumentList "C:\Windows\System32\slmgr.vbs /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX" -NoNewWindow -Wait
+
+Write-Host "Setting the KMS server to kms8.msguides.com..." -ForegroundColor Cyan
+Start-Process -FilePath "cscript.exe" -ArgumentList "C:\Windows\System32\slmgr.vbs /skms kms8.msguides.com" -NoNewWindow -Wait
+
+Write-Host "Activating Windows..." -ForegroundColor Cyan
+Start-Process -FilePath "cscript.exe" -ArgumentList "C:\Windows\System32\slmgr.vbs /ato" -NoNewWindow -Wait
+
+Write-Host "All commands completed." -ForegroundColor Green
 ````
 
 Each command performs a distinct function in resetting and reconfiguring the Windows activation setup.
@@ -69,7 +82,7 @@ Each command performs a distinct function in resetting and reconfiguring the Win
 
 ### 1. **Download the Script**
 
-Download the file `activatewin11pro.ps1` from this repository to any location on your system.
+Save `activatewin11pro.ps1` from this repository to your **Downloads** folder.
 
 ---
 
@@ -86,22 +99,39 @@ To do this:
 
 ---
 
-### 3. **Run the Script**
+### 3. **Navigate to the Downloads Folder**
 
-Navigate to the directory where the script was saved. For example:
-
-```powershell
-cd "C:\Users\YourName\Downloads"
-```
-
-Then run:
+In the PowerShell window, enter the following commands:
 
 ```powershell
-.\activatewin11pro.ps1
+cd ~
+cd Downloads
 ```
 
-You will see output and prompts in the terminal. Some commands may also display Windows popups — click **OK** on those when they appear.
+This ensures you're in the directory where your script is saved.
 
+---
+
+### 4. **Run the Script with Execution Policy Bypass**
+
+Now run the script using this command:
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force; .\activatewin11pro.ps1
+```
+
+---
+
+### ❓ What Does That Command Do?
+
+- `Set-ExecutionPolicy Bypass`: Temporarily allows script execution.
+    
+- `-Scope Process`: Applies only to the current PowerShell session (safe and non-permanent).
+    
+- `-Force`: Skips confirmation prompts.
+    
+- `.\activatewin11pro.ps1`: Executes the script file in the current folder.
+    
 ---
 
 ## ✅ Confirm Activation
@@ -110,7 +140,7 @@ Once the script completes, confirm that Windows is activated:
 
 1. Open **Settings**
 2. Go to **System > Activation**
-3. You should see **Windows is activated with a digital license**
+3. You should see **Product Activated Successfully**
 
 ---
 
@@ -126,4 +156,3 @@ It is intended for:
 
 **Do not use this script for unauthorized activation.**
 You are responsible for ensuring legal and license-compliant usage.
-
